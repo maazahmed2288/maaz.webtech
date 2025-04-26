@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Car Details | Fast and Furious</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f9f9f9; margin: 0; }
+    .container { max-width: 800px; margin: auto; padding: 20px; background: white; margin-top: 40px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    h2 { color: #c40000; }
+    img { width: 100%; border-radius: 10px; max-height: 400px; object-fit: cover; }
+    ul { padding-left: 20px; }
+    form input, form textarea, form button {
+      width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc;
+    }
+    form button { background: #c40000; color: white; border: none; cursor: pointer; }
+    footer { background: #eee; text-align: center; padding: 20px; margin-top: 40px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 id="carName">Car Name</h2>
+    <img id="carImage" src="" alt="Car Image">
+    <p><strong>Price:</strong> ₹<span id="carPrice"></span></p>
+    <ul id="carSpecs"></ul>
+    <h3>Book this Car</h3>
+    <form onsubmit="event.preventDefault(); alert('Booking request submitted!');">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Email" required>
+      <input type="tel" placeholder="Phone Number" required>
+      <input type="date" required>
+      <textarea placeholder="Message..." rows="4"></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <footer>
+    &copy; 2025 Fast and Furious. All rights reserved.
+  </footer>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const car = params.get('car');
+    const carData = {
+      ferrari: {
+        name: "Ferrari SF90 Stradale",
+        img: "https://cdn.motor1.com/images/mgl/x6n1e/s1/ferrari-sf90-stradale.jpg",
+        price: "3,88,00,000",
+        specs: ["Top Speed: 211 mph", "0-60 mph: 2.5 sec", "Hybrid V8 Engine", "986 horsepower"]
+      },
+      lamborghini: {
+        name: "Lamborghini Aventador",
+        img: "https://cdn.motor1.com/images/mgl/BqqR6/s1/2023-lamborghini-aventador.jpg",
+        price: "3,73,00,000",
+        specs: ["Top Speed: 217 mph", "0-60 mph: 2.8 sec", "V12 Engine", "759 horsepower"]
+      },
+      bugatti: {
+        name: "Bugatti Chiron Super Sport",
+        img: "https://cdn.motor1.com/images/mgl/qeG1A/s1/2023-bugatti-chiron-super-sport.jpg",
+        price: "24,00,00,000",
+        specs: ["Top Speed: 273 mph", "0-60 mph: 2.4 sec", "Quad-turbo W16 engine", "1,577 horsepower"]
+      }
+    };
+    const carInfo = carData[car];
+    if (carInfo) {
+      document.getElementById("carName").innerText = carInfo.name;
+      document.getElementById("carImage").src = carInfo.img;
+      document.getElementById("carPrice").innerText = carInfo.price;
+      document.getElementById("carSpecs").innerHTML = carInfo.specs.map(spec => `<li>${spec}</li>`).join('');
+    }
+  </script>
+</body>
+</html>

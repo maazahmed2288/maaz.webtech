@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fast and Furious | Car Showcase</title>
+  <style>
+    body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #f9f9f9; }
+    header { background: #111; color: white; text-align: center; padding: 40px 20px; }
+    .container { max-width: 1000px; margin: auto; padding: 20px; }
+    .section { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .car-card { display: flex; align-items: center; gap: 20px; margin-top: 20px; cursor: pointer; transition: 0.2s; }
+    .car-card:hover { transform: scale(1.01); }
+    .car-card img { width: 300px; border-radius: 10px; }
+    .car-details { flex: 1; }
+    .car-details h3 { margin: 0; color: #333; font-size: 24px; }
+    h2 { color: #c40000; }
+    footer { background: #eee; text-align: center; padding: 20px; margin-top: 40px; }
+    .filters { display: flex; gap: 10px; margin-bottom: 20px; }
+    .filters input { padding: 5px; flex: 1; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://cdn.motor1.com/images/mgl/x6n1e/s1/ferrari-sf90-stradale.jpg" alt="Banner" style="width:100%; max-height:400px; object-fit:cover; border-bottom: 5px solid #c40000;">
+    <h1>Welcome to Fast and Furious</h1>
+    <p>Experience the Power. Drive the Legend.</p>
+  </header>
+  <div class="container">
+    <div class="section">
+      <h2>Available Cars</h2>
+      <div class="filters">
+        <input type="text" id="brandFilter" placeholder="Search by brand..." oninput="filterCars()">
+        <input type="number" id="maxPriceFilter" placeholder="Max price..." oninput="filterCars()">
+      </div>
+      <div id="carList"></div>
+    </div>
+  </div>
+  <footer>
+    &copy; 2025 Fast and Furious. All rights reserved.<br>Contact: 1100110011 | Address: Delhi, India
+  </footer>
+  <script>
+    const cars = [
+      { key: "ferrari", name: "Ferrari SF90 Stradale", price: 38800000, img: "https://cdn.motor1.com/images/mgl/x6n1e/s1/ferrari-sf90-stradale.jpg" },
+      { key: "lamborghini", name: "Lamborghini Aventador", price: 37300000, img: "https://cdn.motor1.com/images/mgl/BqqR6/s1/2023-lamborghini-aventador.jpg" },
+      { key: "bugatti", name: "Bugatti Chiron Super Sport", price: 240000000, img: "https://cdn.motor1.com/images/mgl/qeG1A/s1/2023-bugatti-chiron-super-sport.jpg" }
+    ];
+    function filterCars() {
+      const brand = document.getElementById('brandFilter').value.toLowerCase();
+      const maxPrice = document.getElementById('maxPriceFilter').value;
+      const filtered = cars.filter(car =>
+        car.name.toLowerCase().includes(brand) &&
+        (!maxPrice || car.price <= maxPrice)
+      );
+      renderCars(filtered);
+    }
+    function renderCars(carList) {
+      document.getElementById('carList').innerHTML = carList.map(car => `
+        <div class="car-card" onclick="location.href='car_details.html?car=${car.key}'">
+          <img src="${car.img}" alt="${car.name}">
+          <div class="car-details">
+            <h3>${car.name}</h3>
+            <p>Price: ₹${car.price.toLocaleString()}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+    renderCars(cars);
+  </script>
+</body>
+</html>
